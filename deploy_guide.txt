@@ -1,0 +1,288 @@
+# 🚀 Guide de Déploiement
+
+## Vue d'ensemble
+
+Ce site est une application statique qui peut être déployée sur n'importe quel hébergeur supportant les fichiers HTML/CSS/JS.
+
+## 📋 Pré-requis
+
+- [ ] Tous les fichiers du projet
+- [ ] Accès à un service d'hébergement
+- [ ] Domaine configuré (optionnel)
+
+## 🌐 Options de Déploiement
+
+### 1. GitHub Pages (Gratuit)
+
+```bash
+# 1. Créer un repository GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/[username]/vacation-rental-site.git
+git push -u origin main
+
+# 2. Activer GitHub Pages
+# - Aller dans Settings → Pages
+# - Source: Deploy from a branch
+# - Branch: main / (root)
+```
+
+**URL**: `https://[username].github.io/vacation-rental-site`
+
+### 2. Netlify (Gratuit)
+
+```bash
+# Option A: Drag & Drop
+# 1. Zipper le dossier du projet
+# 2. Aller sur https://app.netlify.com/drop
+# 3. Glisser-déposer le fichier ZIP
+
+# Option B: Git
+# 1. Connecter repository GitHub
+# 2. Build settings: (laisser vide pour site statique)
+# 3. Deploy
+```
+
+**Avantages Netlify**:
+- SSL automatique
+- Déploiement continu
+- Prévisualisation branches
+- Redirections personnalisées
+
+### 3. Vercel (Gratuit)
+
+```bash
+# Installation CLI
+npm i -g vercel
+
+# Déploiement
+vercel
+
+# Ou depuis GitHub
+# 1. Connecter repository
+# 2. Deploy automatique
+```
+
+### 4. Surge.sh (Gratuit)
+
+```bash
+# Installation
+npm install -g surge
+
+# Déploiement
+surge
+# Suivre les instructions
+```
+
+### 5. FTP Traditionnel
+
+```bash
+# Uploader tous les fichiers via FTP
+# Structure sur serveur:
+public_html/
+├── index.html
+├── admin.html
+├── assets/
+└── ...
+```
+
+## ⚙️ Configuration Post-Déploiement
+
+### 1. Vérifications
+
+- [ ] Site accessible via URL
+- [ ] Interface admin fonctionnelle
+- [ ] Images se chargent correctement
+- [ ] Multilingue opérationnel
+- [ ] Responsive sur mobile
+
+### 2. Configuration Swikly
+
+```javascript
+// Dans admin → Configuration → Swikly
+{
+  "apiKey": "votre-clé-api-production",
+  "webhookUrl": "https://votre-site.com/webhook",
+  "testMode": false
+}
+```
+
+### 3. Analytics (Optionnel)
+
+```html
+<!-- Ajouter dans index.html et admin.html -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+```
+
+## 🔧 Optimisations Production
+
+### 1. Images
+
+```bash
+# Optimiser les images avant déploiement
+# Utiliser des outils comme:
+# - TinyPNG
+# - ImageOptim
+# - Squoosh
+```
+
+### 2. Performance
+
+```html
+<!-- Ajouter dans <head> -->
+<link rel="preload" href="assets/css/custom.css" as="style">
+<link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+```
+
+### 3. SEO
+
+```html
+<!-- Configurer dans admin → SEO -->
+<meta name="description" content="Description personnalisée">
+<meta property="og:title" content="Titre site">
+<meta property="og:description" content="Description">
+<meta property="og:image" content="https://votre-site.com/image.jpg">
+```
+
+## 🔒 Sécurité
+
+### 1. HTTPS
+
+- Activer SSL/TLS sur l'hébergeur
+- Rediriger HTTP vers HTTPS
+
+### 2. Headers de Sécurité
+
+```apache
+# .htaccess pour Apache
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+```
+
+### 3. Accès Admin
+
+- Changer mot de passe par défaut
+- Considérer restriction IP si possible
+- Activer logs d'accès
+
+## 📊 Monitoring
+
+### 1. Uptime
+
+- UptimeRobot (gratuit)
+- Pingdom
+- StatusCake
+
+### 2. Performance
+
+- Google PageSpeed Insights
+- GTmetrix
+- WebPageTest
+
+### 3. Logs
+
+```javascript
+// Activer logs détaillés en production
+localStorage.setItem('debug', 'true');
+```
+
+## 🛠️ Maintenance
+
+### 1. Sauvegarde
+
+```bash
+# Sauvegarder données localStorage
+# Via interface admin → Outils → Backup
+# Télécharger JSON régulièrement
+```
+
+### 2. Mises à jour
+
+```bash
+# Mettre à jour le code
+git pull origin main
+# Redéployer selon méthode choisie
+```
+
+### 3. Monitoring Erreurs
+
+```javascript
+// Ajouter dans utils.js
+window.onerror = function(msg, url, line, col, error) {
+  console.error('Erreur:', {msg, url, line, col, error});
+  // Envoyer à service monitoring si configuré
+};
+```
+
+## 🚨 Dépannage
+
+### Problèmes Courants
+
+1. **Site ne se charge pas**
+   - Vérifier index.html à la racine
+   - Contrôler permissions fichiers
+   - Tester en local d'abord
+
+2. **Admin inaccessible**
+   - Vérifier URL `/admin.html`
+   - Contrôler console JavaScript
+   - Tester identifiants par défaut
+
+3. **Images manquantes**
+   - Vérifier chemins relatifs
+   - Contrôler permissions dossier
+   - Tester avec images placeholder
+
+4. **Erreurs localStorage**
+   - Vérifier quotas navigateur
+   - Tester en navigation privée
+   - Contrôler HTTPS/HTTP mix
+
+### Support
+
+- Consulter logs navigateur (F12)
+- Tester avec données d'exemple
+- Vérifier documentation API Swikly
+
+## 📈 Métriques Cibles
+
+- **Performance**: Lighthouse > 85
+- **Accessibilité**: Score A11y > 90
+- **SEO**: Score SEO > 85
+- **Temps de chargement**: < 3s
+
+## 🔄 Déploiement Continu
+
+### GitHub Actions (Optionnel)
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+```
+
+---
+
+**✅ Votre site est maintenant prêt pour la production !**

@@ -1,0 +1,39 @@
+{
+  "name": "vacation-rental-site",
+  "version": "1.0.0",
+  "description": "Site web complet pour location de maisons de vacances en Espagne",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server .",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "echo 'See DEPLOY.md for deployment instructions'"
+  },
+  "keywords": [
+    "vacation-rental",
+    "real-estate",
+    "booking",
+    "spain",
+    "multilingual",
+    "responsive"
+  ],
+  "author": "Vacation Rentals Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[username]/vacation-rental-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/[username]/vacation-rental-site/issues"
+  },
+  "homepage": "https://github.com/[username]/vacation-rental-site#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
